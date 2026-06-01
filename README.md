@@ -34,26 +34,22 @@ pip install numpy tensorflow
 
 # 3. Execute o pipeline unificado
 python main.py
+```
+## Discussão Teórica (Análise Crítica)
 
-#### Discussão Teórica (Análise Crítica)
-
-1. Generalização para a Dimensão N × N
+### 1. Generalização para a Dimensão N × N
 Resolver o Sudoku 4x4 com uma rede Multilayer Perceptron (MLP) é possível devido ao espaço de estados reduzido. No entanto, escalar para grades N×N (como o Sudoku 9x9) apresenta desafios arquiteturais complexos.
 
-1.1 Mudanças Necessárias para Generalização
-Parametrização Dinâmica: O modelo precisaria aceitar entradas variáveis N 
-2
-  e adaptar a camada de saída para comportar N classes por célula.
+### 1.1 Mudanças Necessárias para Generalização
+Parametrização Dinâmica: O modelo precisaria aceitar entradas variáveis N² e adaptar a camada de saída para comportar N classes por célula.
 
 Mudança Arquitetural: Redes densas (MLPs) ignoram a estrutura espacial do tabuleiro. Para N×N, seriam necessárias Redes Neurais Convolucionais (CNNs) para capturar dependências locais (subgrades) ou Redes Neurais em Grafos (GNNs), que são mais adequadas para representar as restrições de adjacência de um Sudoku.
 
-1.2 Dificuldades na Implementação
+### 1.2 Dificuldades na Implementação
 A principal barreira é a natureza estocástica das RNAs. O Sudoku é um problema lógico de restrições rígidas (hard constraints). Enquanto uma RNA aprende padrões estatísticos, ela não aprende, por padrão, que números não podem se repetir. Escalar para N×N causaria uma falha generalizada na satisfação das regras, exigindo abordagens híbridas (Neuro-Simbólicas) que incorporem solucionadores lógicos (como SAT solvers) dentro do processo de predição.
 
-2. O Problema da Abordagem "Generate and Test"
-A abordagem "Generate and Test" consiste em gerar uma solução candidata (populando o tabuleiro) para, posteriormente, validar se ela cumpre as regras.
-
-Esta técnica é ineficiente para problemas de grande escala por ser "cega":
+### 2. O Problema da Abordagem "Generate and Test"
+A abordagem "Generate and Test" consiste em gerar uma solução candidata (populando o tabuleiro) para, posteriormente, validar se ela cumpre as regras. Esta técnica é ineficiente para problemas de grande escala por ser "cega":
 
 Custo Computacional: A maior parte do tempo é gasta validando estados matematicamente impossíveis.
 
